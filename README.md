@@ -1,7 +1,9 @@
 CromlechCromDemo
 ================
 
-  $> virtualenv . && source bin/activate
-  $> python bootstrap.py
-  $> ./bin/buildout
-  $> ./bin/instance
+```bash
+$> virtualenv . && source bin/activate
+$> python bootstrap.py
+$> ./bin/buildout
+$> ./bin/instance
+```
