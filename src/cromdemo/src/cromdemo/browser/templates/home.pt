@@ -1,0 +1,9 @@
+<div id="root">
+  <h1 tal:content="context.title" />
+  <ul>
+    <li tal:repeat="name context.keys()">
+      <a tal:content="context[name].title"
+	 tal:attributes="href request.script_name + '/' + name" />
+    </li>
+  </ul>
+</div>

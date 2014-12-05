@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/x
+html1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title tal:content="layout.title" />
+    <base tal:attributes="href request.path" />
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="/">Cromlech Lite</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="content">
+        <div tal:replace="structure slot:protectedheader" />
+	<div tal:replace="structure content" />
+
+	<footer class="footer modal-footer">
+	  Simplier is better but Cromlech is the best.
+	</footer>
+      </div>
+    </div>
+  </body>
+</html>
