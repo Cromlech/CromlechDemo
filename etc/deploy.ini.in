@@ -9,8 +9,3 @@ next = crom
 [app:crom]
 use = egg:cromdemo#demo
 zcml_file = ${zcml:output}
-
-[server:main]
-use = egg:Paste#http
-host = 0.0.0.0
-port = 8082
