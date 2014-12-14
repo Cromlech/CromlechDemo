@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+
 from cromdemo.wsgi import demo_application
 from crom import monkey, implicit
 from cromlech.configuration.utils import load_zcml
 from cromlech.i18n import load_translations_directories
+from fanstatic import Fanstatic
 
 
+# Bootstrapping the Crom registry
 monkey.incompat()
 implicit.initialize()
 
@@ -13,4 +17,5 @@ load_zcml("${zcml:output}")
 # load translation
 load_translations_directories()
 
-application = demo_application
+# Create the application, including the middlewares.
+application = Fanstatic(demo_application)
