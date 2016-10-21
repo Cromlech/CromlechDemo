@@ -22,6 +22,11 @@ class ProtectedHeader(ViewletManager):
     pass
 
 
+@viewlet_manager
+class ContextualActions(ViewletManager):
+    pass
+
+
 @crom.component
 @crom.sources(IRequest, Interface)
 @crom.target(ILayout)

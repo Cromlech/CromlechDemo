@@ -6,7 +6,9 @@
 
   <grok:grok package="." />
   <grok:grok package="cromlech.i18n" />
+  <grok:grok package="cromlech.location" />
   <grok:grok package="cromlech.dawnlight" />
+  <grok:grok package="dolmen.forms.base" />
   <grok:grok package="dolmen.forms.ztk" />
 
 </configure>

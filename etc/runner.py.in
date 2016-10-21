@@ -5,6 +5,7 @@ from crom import monkey, implicit
 from cromlech.configuration.utils import load_zcml
 from cromlech.i18n import load_translations_directories
 from fanstatic import Fanstatic
+from cromlech.wsgistate.middleware import file_session_wrapper
 
 
 # Bootstrapping the Crom registry
@@ -18,4 +19,6 @@ load_zcml("${zcml:output}")
 load_translations_directories()
 
 # Create the application, including the middlewares.
-application = Fanstatic(demo_application)
+sessionned = file_session_wrapper(
+    demo_application, session_cache="${app:sessions}", timeout=${app:sessions_timeout})
+application = Fanstatic(sessionned)

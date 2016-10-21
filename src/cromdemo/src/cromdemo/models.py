@@ -3,7 +3,12 @@
 from cromlech.browser.interfaces import IPublicationRoot
 from zope.interface import implementer, Interface
 from zope.location import Location, locate
-from zope.schema import Text, TextLine
+from zope.schema import Text, TextLine, Password
+
+
+class ILogin(Interface):
+    username = TextLine(title=u'Username', required=True)
+    password = Password(title=u'Password', required=True)
 
 
 class ILeaf(Interface):
@@ -20,7 +25,7 @@ class Leaf(Location):
 
 
 @implementer(IPublicationRoot)
-class Root(dict):
+class Root(dict, Location):
 
     title = u"Demo Root"
 

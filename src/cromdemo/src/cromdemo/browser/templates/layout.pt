@@ -16,6 +16,7 @@ html1/DTD/xhtml1-strict.dtd">
     <div class="container">
       <div class="content">
         <div tal:replace="structure slot:protectedheader" />
+	<div tal:replace="structure slot:contextualactions" />
 	<div tal:replace="structure content" />
 
 	<footer class="footer modal-footer">

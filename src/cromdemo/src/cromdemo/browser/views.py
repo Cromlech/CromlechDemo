@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from . import tal_template
-from .layout import ProtectedHeader
+from . import tal_template, ITab
+from .layout import ProtectedHeader, ContextualActions
 from ..models import Root, Leaf
 
+from crom import target
 from dolmen.view import name, context, View
 from dolmen.view import make_layout_response, view_component
 from dolmen.viewlet import viewlet, Viewlet
-from cromlech.browser import slot, view
+from cromlech.browser import IURL, slot, view
+from cromlech.browser.directives import title
 from cromlech.webob.response import Response
 from cromlech.security import secured_component, permission, Unauthorized
+from cromlech.security.interfaces import ISecuredComponent
+from cromlech.security.interaction import getInteraction
 
 
 @view_component
@@ -23,6 +27,7 @@ class RootIndex(View):
 
 @view_component
 @name('index')
+@target(ITab)
 @context(Leaf)
 class LeafIndex(View):
     responseFactory = Response
@@ -45,6 +50,7 @@ class NoAcces(View):
 @secured_component
 @name('protected')
 @context(Leaf)
+@target(ITab)
 @permission('ViewProtected')
 class ProtectedLeafView(View):
     responseFactory = Response
@@ -56,10 +62,33 @@ class ProtectedLeafView(View):
 
 @viewlet
 @slot(ProtectedHeader)
-@view(RootIndex)
 class WhoAmI(Viewlet):
     """Greets a logged in superuser on the index.
     """
     def render(self):
         username = self.request.environment['REMOTE_USER']
         return u"Welcome, master %s !" % username
+
+
+@viewlet
+@slot(ContextualActions)
+class Tabs(Viewlet):
+    template = tal_template('tabs.pt')
+
+    def tabs(self):
+        interaction = getInteraction()
+        url = IURL(self.context, self.request)
+        for name, view in self._tabs:
+            if ISecuredComponent.implementedBy(view):
+                if view.__check__(component=view, interaction=interaction):
+                    continue
+            label = title.get(view) or name
+            if self.view.__class__ is view:
+                active = True
+            else:
+                active = False
+            yield {'active': active, 'title': label,
+                   'url': '%s/%s' % (url, name)}
+
+    def update(self):
+        self._tabs = list(ITab.all_components(self.context, self.request))

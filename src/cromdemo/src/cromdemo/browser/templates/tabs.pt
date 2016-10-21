@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+  <tal:tabs repeat="tab component.tabs()">
+    <li tal:attributes="class tab['active'] and 'active' or ''">
+      <a href="#"
+	 tal:attributes="href tab['url']"
+	 tal:content="tab['title']" />
+    </li>
+  </tal:tabs>
+</ul>

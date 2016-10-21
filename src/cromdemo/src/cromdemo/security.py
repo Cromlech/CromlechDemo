@@ -16,9 +16,11 @@ accesses = {
 def view_security_checker(component, permission, interaction):
     """Implementation of our security policy
     """
-    for protagonist in interaction:
-        access = accesses.get(protagonist.principal.id, None)
-        if access is not None:
-            if permission in access:
-                return None
+    protagonist = next(iter(interaction))
+    access = accesses.get(protagonist.principal.id, None)
+    if access is not None:
+        if permission is None:
+            return
+        elif permission in access:
+            return
     return Unauthorized
