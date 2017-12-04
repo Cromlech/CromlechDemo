@@ -3,13 +3,11 @@
 import crom
 
 from . import tal_template
-from .resources import lite
 from cromlech.browser import IRequest, ILayout
 from cromlech.i18n import getLocale
 from cromlech.security import permissions
 from cromlech.webob.response import Response
 from dolmen.viewlet import ViewletManager, viewlet_manager
-from js.jqueryui import black_tie
 from zope.interface import Interface, implementer
 from cromlech.security import IProtectedComponent
 
@@ -53,8 +51,6 @@ class LiteLayout(object):
         return namespace
 
     def __call__(self, content, **namespace):
-        lite.need()
-        black_tie.need()
         environ = self.namespace(**namespace)
         environ['content'] = content
         if self.template is None:
