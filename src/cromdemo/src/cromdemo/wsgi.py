@@ -11,7 +11,6 @@ from cromlech.wsgistate.controlled import WsgistateSession
 from cromlech.webob.request import Request
 from cromlech.i18n import EnvironLocale
 from crom import ComponentLookupError
-from cromlech.browser.predication import resolve_predications
 from cromlech.security import Unauthorized, Forbidden
 
 
@@ -23,12 +22,6 @@ logins = {
 
 def query_view(request, context, name=""):
     view = IView.component(context, request, name=name)
-    try:
-        resolve_predications(view, context, request)
-    except (Unauthorized, Forbidden) as e:
-        raise
-    except Exception as e:
-        raise ComponentLookupError(str(e))
     return view(context, request)
 
 

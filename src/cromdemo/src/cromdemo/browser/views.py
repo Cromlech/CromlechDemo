@@ -62,10 +62,6 @@ class WhoAmI(Viewlet):
         return u"Welcome, master %s !" % username
 
 
-from cromlech.browser.predication import resolve_predications
-from cromlech.security import Unauthorized, Forbidden
-
-
 def sort_key(component):
     explicit = order.get_policy(component[1], order.dotted_name, 0)
     return (explicit, component[1].__module__, component[1].__class__.__name__)
@@ -78,12 +74,7 @@ class Tabs(Viewlet):
 
     def tabs(self):
         url = IURL(self.context, self.request)
-        for id, view in self._tabs:
-            try:
-                resolve_predications(view, self.context, self.request)
-            except (Unauthorized, Forbidden) as error:
-                continue
-    
+        for id, view in self._tabs:    
             label = title.get(view) or id
             if self.view.__class__ is view:
                 active = True

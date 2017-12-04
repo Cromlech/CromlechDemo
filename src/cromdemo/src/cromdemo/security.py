@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from crom import subscription, sources, target, order
-from cromlech.browser.interfaces import IPredication
 from cromlech.security import Unauthorized
 from cromlech.security import queryInteraction
 from cromlech.security.interfaces import IProtectedComponent, ISecurityCheck
@@ -13,14 +12,10 @@ accesses = {
     }
 
 
-class ISecurityPredication(IPredication, ISecurityCheck):
-    pass
-
-
 @order(1)
 @subscription
 @sources(IProtectedComponent)
-@target(ISecurityPredication)
+@target(ISecurityCheck)
 def security_predicate(component, *args):
     interaction = queryInteraction()
     if not interaction:
