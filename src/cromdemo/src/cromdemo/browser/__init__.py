@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from os import path
-from dolmen.template import TALTemplate
-from .resources import lite
+
 from cromlech.browser import IView
+from cromlech.webob.response import Response
+from dolmen.template import TALTemplate
+from dolmen.view import View, make_layout_response
+from dolmen.forms.base import Form as BaseForm
+from cromlech.location import get_absolute_url
 
 
 TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
@@ -15,3 +19,16 @@ def tal_template(name):
 
 class ITab(IView):
     pass
+
+
+class Page(View):
+    responseFactory = Response
+    make_response = make_layout_response
+
+    def url(self):
+        return get_absolute_url(self.context, self.request)
+
+
+class Form(BaseForm):
+    responseFactory = Response
+    make_response = make_layout_response

@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from crom import subscription, sources, target
+from crom import subscription, sources, target, order
+from cromlech.browser.interfaces import IPredication
 from cromlech.security import Unauthorized
-from cromlech.security.interfaces import ISecuredComponent, ISecurityCheck
+from cromlech.security import queryInteraction
+from cromlech.security.interfaces import IProtectedComponent, ISecurityCheck
+from cromlech.security.meta import permissions
 
 
 accesses = {
@@ -10,17 +13,25 @@ accesses = {
     }
 
 
+class ISecurityPredication(IPredication, ISecurityCheck):
+    pass
+
+
+@order(1)
 @subscription
-@sources(ISecuredComponent)
-@target(ISecurityCheck)
-def view_security_checker(component, permission, interaction):
-    """Implementation of our security policy
-    """
+@sources(IProtectedComponent)
+@target(ISecurityPredication)
+def security_predicate(component, *args):
+    interaction = queryInteraction()
+    if not interaction:
+        raise Unauthorized
+    
     protagonist = next(iter(interaction))
     access = accesses.get(protagonist.principal.id, None)
     if access is not None:
-        if permission is None:
+        perms = permissions.get(component) or tuple()
+        if not perms:
             return
-        elif permission in access:
+        elif frozenset(perms) <= access:
             return
-    return Unauthorized
+    raise Unauthorized

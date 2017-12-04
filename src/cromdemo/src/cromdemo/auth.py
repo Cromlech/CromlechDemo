@@ -67,7 +67,7 @@ class Auth(Location, BasicAuth):
                     password = fs["form.field.password"].value
                     return username, password
                 except KeyError:
-                    pass # silence
+                    pass  # silence
 
         return '', ''
 

@@ -20,5 +20,6 @@ load_translations_directories()
 
 # Create the application, including the middlewares.
 sessionned = file_session_wrapper(
-    demo_application, session_cache="${app:sessions}", timeout=${app:sessions_timeout})
+    demo_application, session_cache="${app:sessions}",
+    timeout=${app:sessions_timeout})
 application = Fanstatic(sessionned)

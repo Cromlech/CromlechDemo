@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from . import tal_template, ITab
-from .layout import ProtectedHeader
+from . import ITab, Form
 from ..models import ILeaf, ILogin
 from ..auth import Auth
 
-from crom import target
+from crom import target, order
 from dolmen.forms.base import name, context, form_component
-from dolmen.forms.base import Fields, Form, Action, Actions
-from dolmen.view import make_layout_response
-from cromlech.webob.response import Response
+from dolmen.forms.base import Fields, Action, Actions, FAILURE
 from cromlech.browser.exceptions import HTTPFound
-from cromlech.security import secured_component
+from cromlech.security import IProtectedComponent
+from zope.interface import implementer
 
 
 class LoginAction(Action):
@@ -31,20 +29,16 @@ class LoginAction(Action):
 @name('edit')
 @context(ILeaf)
 @target(ITab)
-@secured_component
+@order(20)
 class Edit(Form):
-    responseFactory = Response
-    make_response = make_layout_response
     fields = Fields(ILeaf)
 
 
 @form_component
 @name('login')
 @context(Auth)
+@implementer(IProtectedComponent)
 class Login(Form):
-    responseFactory = Response
-    make_response = make_layout_response
-
     fields = Fields(ILogin)
     actions = Actions(LoginAction(u'Log me'))
 
