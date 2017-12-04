@@ -7,11 +7,11 @@ from cromlech.browser.interfaces import IView
 from cromlech.dawnlight import ViewLookup, view_locator
 from cromlech.security import unauthenticated_principal
 from cromlech.security import ContextualProtagonist, Principal
+from cromlech.security import component_protector
 from cromlech.wsgistate.controlled import WsgistateSession
 from cromlech.webob.request import Request
 from cromlech.i18n import EnvironLocale
 from crom import ComponentLookupError
-from cromlech.security import Unauthorized, Forbidden
 
 
 logins = {
@@ -25,7 +25,7 @@ def query_view(request, context, name=""):
     return view(context, request)
 
 
-view_lookup = ViewLookup(view_locator(query_view))
+view_lookup = ViewLookup(view_locator(component_protector(query_view)))
 
 
 def demo_application(environ, start_response):
