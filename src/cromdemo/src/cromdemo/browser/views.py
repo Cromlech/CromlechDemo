@@ -9,10 +9,24 @@ from crom.utils import sort_components
 from dolmen.view import name, context, view_component
 from dolmen.viewlet import viewlet, Viewlet
 from cromlech.browser import IURL, slot
+from cromlech.browser.exceptions import HTTPFound
 from cromlech.browser.directives import title
 from cromlech.security import permissions, Unauthorized
 from cromlech.security import IProtectedComponent
-from zope.interface import implementer
+from zope.interface import implementer, Interface
+from ..auth import logout
+
+
+@view_component
+@name('logout')
+@context(Interface)
+class Logout(Page):
+
+    def update(self):
+        logout()
+
+    def render(self):
+        raise HTTPFound(location='/')
 
 
 @view_component

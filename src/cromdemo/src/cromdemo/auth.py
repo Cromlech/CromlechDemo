@@ -19,8 +19,8 @@ except:
 def logout(session=None):
     if session is None:
         session = getSession()
-    if 'REMOTE_USER' in session:
-        del session['REMOTE_USER']
+    if 'user' in session:
+        session.clear()
         return True
     return False
 

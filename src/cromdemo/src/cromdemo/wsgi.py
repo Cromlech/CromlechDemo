@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from .models import Root
-from .auth import secured
-from cromlech.dawnlight import DawnlightPublisher
+from functools import wraps
+
+from crom import ComponentLookupError
+from cromlech.browser import setSession
 from cromlech.browser.interfaces import IView
+from cromlech.dawnlight import DawnlightPublisher
 from cromlech.dawnlight import ViewLookup, view_locator
-from cromlech.security import unauthenticated_principal
+from cromlech.i18n import EnvironLocale
 from cromlech.security import ContextualProtagonist, Principal
 from cromlech.security import component_protector
-from cromlech.wsgistate.controlled import WsgistateSession
+from cromlech.security import unauthenticated_principal
 from cromlech.webob.request import Request
-from cromlech.i18n import EnvironLocale
-from crom import ComponentLookupError
+
+from .models import Root
+from .auth import secured
 
 
 logins = {
@@ -28,8 +31,21 @@ def query_view(request, context, name=""):
 view_lookup = ViewLookup(view_locator(component_protector(query_view)))
 
 
+def sessionned(app):
+    @wraps(app)
+    def with_session(environ, start_response):
+        try:
+            setSession(environ['session'])
+            response = app(environ, start_response)
+        finally:
+            setSession()
+        return response
+    return with_session
+
+
 def demo_application(environ, start_response):
 
+    @sessionned
     @secured(logins, "CromlechDemo")
     def publisher(environ, start_response):
         with EnvironLocale(environ):
@@ -45,7 +61,4 @@ def demo_application(environ, start_response):
                 response = publisher.publish(request, root, handle_errors=True)
                 return response(environ, start_response)
 
-    with WsgistateSession(environ, 'session'):
-        response = publisher(environ, start_response)
-
-    return response
+    return publisher(environ, start_response)
