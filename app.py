@@ -27,7 +27,7 @@ with Configuration('config.json') as config:
     implicit.initialize()
 
     # Getting the crypto key and creating the JWT service
-    from dolmen.sessions.jwt import JWTCookieSession
+    from cromlech.sessions.jwt import JWTCookieSession
     key = get_key(config['session']['jwt_key'])
     session_wrapper = JWTCookieSession(
         key, int(config['session']['timeout'])).wrapper
