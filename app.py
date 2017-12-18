@@ -30,8 +30,8 @@ with Configuration('config.json') as config:
     from cromlech.sessions.jwt import JWTCookieSession
     key = get_key(config['session']['jwt_key'])
     session_wrapper = JWTCookieSession(
-        key, int(config['session']['timeout'])).wrapper
-    
+        key, int(config['session']['timeout']))
+
     # read the ZCML
     from cromlech.configuration.utils import load_zcml
     load_zcml(config['app']['zcml'])
