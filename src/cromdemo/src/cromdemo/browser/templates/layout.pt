@@ -1,29 +1,52 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/x
-html1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title tal:content="layout.title" />
-    <base tal:attributes="href request.path" />
+    <script
+	src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8" />
+    <title></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <styles>
+      #footer {
+	  background-color: #464c4a;
+	  padding: 2em 0 5em 0;
+	  margin-top: 1em
+      }
+
+      #footer a {
+	  color: white;
+	  font-weight: bold;
+      }
+
+      #siteheader {
+	  width: auto;
+	  padding: 1em 0 0 0;
+	  background-color: #004a96;
+	  margin: 0 0 2em 0;
+      }
+    </styles>
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="/">Cromlech Lite</a>
-        </div>
+    <div id="wrapper">
+      <div class="container" id="siteheader">
+	<div tal:replace="structure slot:protectedheader" />
       </div>
-    </div>
-    <div class="container" style="margin-top: 45px;">
-      <div class="content">
-        <div tal:replace="structure slot:protectedheader" />
-	<div tal:replace="structure slot:contextualactions" />
-	<div tal:replace="structure content" />
-
-	<footer class="footer modal-footer">
-	  Simplier is better but Cromlech is the best.
-	</footer>
+      <div class="container" id="page-content-wrapper">
+	<div id="main">
+	  <div class="content">
+	    <div tal:replace="structure slot:contextualactions" />
+	    <div tal:replace="structure content" />
+	  </div>
+	</div>
       </div>
+      <div id="footer" tal:content="structure provider:footer" />
     </div>
   </body>
 </html>
