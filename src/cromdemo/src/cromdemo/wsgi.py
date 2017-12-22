@@ -8,10 +8,10 @@ from cromlech.browser.interfaces import IView
 from cromlech.dawnlight import DawnlightPublisher
 from cromlech.dawnlight import ViewLookup, view_locator
 from cromlech.i18n import EnvironLocale
-from cromlech.security import ContextualProtagonist, Principal
-from cromlech.security import component_protector, getSecureLookup
-from cromlech.security import unauthenticated_principal as anonymous
+from cromlech.security import ContextualInteraction, Principal
 from cromlech.security import removeFromInteraction, joinInteraction
+from cromlech.security import getSecureLookup
+from cromlech.security import unauthenticated_principal as anonymous
 from cromlech.webob.request import Request
 
 from .models import Root
@@ -64,6 +64,6 @@ def demo_application(environ, start_response):
                     joinInteraction(principal, interaction)
     
                 response = publisher(request, root, handle_errors=True)
-                return response
+                return response(environ, start_response)
 
             return publish(environ, start_response)
