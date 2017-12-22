@@ -10,7 +10,8 @@ from cromlech.dawnlight import ViewLookup, view_locator
 from cromlech.i18n import EnvironLocale
 from cromlech.security import ContextualProtagonist, Principal
 from cromlech.security import component_protector, getSecureLookup
-from cromlech.security import unauthenticated_principal
+from cromlech.security import unauthenticated_principal as anonymous
+from cromlech.security import removeFromInteraction, joinInteraction
 from cromlech.webob.request import Request
 
 from .models import Root
@@ -30,8 +31,9 @@ def secure_query_view(request, context, name=""):
     return view(context, request)
 
 
+root = Root()
 view_lookup = ViewLookup(view_locator(secure_query_view))
-dawnlight_publisher = DawnlightPublisher(view_lookup=view_lookup).publish
+publisher = DawnlightPublisher(view_lookup=view_lookup).publish
 
 
 def sessionned(app):
@@ -46,22 +48,22 @@ def sessionned(app):
     return with_session
 
 
+@sessionned
 def demo_application(environ, start_response):
 
-    @sessionned
-    @secured(logins, "CromlechDemo")
-    def publisher(environ, start_response):
-        with EnvironLocale(environ):
-            request = Request(environ)
-            root = Root()
-            username = environ.get('REMOTE_USER')
-            if username is not None:
-                principal = Principal(username)
-            else:
-                principal = unauthenticated_principal
-            with ContextualProtagonist(principal):
-                response = dawnlight_publisher(
-                    request, root, handle_errors=True)
-                return response(environ, start_response)
+    with EnvironLocale(environ):
+        with ContextualInteraction(anonymous) as interaction:
 
-    return publisher(environ, start_response)
+            @secured(logins, "CromlechDemo")
+            def publish(environ, start_response):
+                request = Request(environ)
+                username = environ.get('REMOTE_USER')
+                if username is not None:
+                    principal = Principal(username)
+                    removeFromInteraction(anonymous, interaction)
+                    joinInteraction(principal, interaction)
+    
+                response = publisher(request, root, handle_errors=True)
+                return response
+
+            return publish(environ, start_response)
