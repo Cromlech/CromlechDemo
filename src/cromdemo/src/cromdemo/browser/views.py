@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import tal_template, ITab, Page
-from .layout import ProtectedHeader, ContextualActions
+from .layout import SiteHeader, ProtectedHeader, ContextualActions
 from ..models import Root, Leaf
 
 from crom import target, order
@@ -50,7 +50,7 @@ class LeafIndex(Page):
 class NoAcces(Page):
 
     def render(self):
-        return u"No access for you !"
+        return "No access for you !"
 
 
 @view_component
@@ -61,9 +61,17 @@ class NoAcces(Page):
 class ProtectedLeafView(Page):
 
     def render(self):
-        return u'The protected area revealed !'
+        return "The protected area revealed !"
 
 
+@viewlet
+@slot(SiteHeader)
+class Cromlech(Viewlet):
+
+    def render(self):
+        return "<h1>Cromlech</h1>"
+
+    
 @viewlet
 @slot(ProtectedHeader)
 class WhoAmI(Viewlet):
@@ -71,7 +79,7 @@ class WhoAmI(Viewlet):
     """
     def render(self):
         username = self.request.environment['REMOTE_USER']
-        return u"Welcome, master %s !" % username
+        return "<p>Welcome, master %s !</p>" % username
 
 
 def sort_key(component):
@@ -87,14 +95,13 @@ class Tabs(Viewlet):
     def tabs(self):
         url = IURL(self.context, self.request)
         for id, view in self._tabs:    
-            label = title.get(view) or id
-            if self.view.__class__ is view:
-                active = True
-            else:
-                active = False
-            yield {'active': active, 'title': label,
-                   'url': '%s/%s' % (url, id)}
+            yield {
+                'active': self.view.__class__ is view,
+                'title': title.get(view) or id,
+                'url': '%s/%s' % (url, id),
+            }
 
     def update(self):
         self._tabs = sort_components(
             ITab.all_components(self.context, self.request), key=sort_key)
+        self.available = len(self._tabs)

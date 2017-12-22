@@ -66,7 +66,7 @@ def demo_application(environ, start_response):
                     joinInteraction(principal, interaction)
 
                 if username == 'grok':
-                    with ContextualSecurityWrapper(no_security, (Exception,)):
+                    with ContextualSecurityWrapper(no_security):
                         response = publisher(request, root, handle_errors=True)
                 else:
                     response = publisher(request, root, handle_errors=True)

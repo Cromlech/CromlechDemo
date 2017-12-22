@@ -13,11 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <styles>
+    <style>
       #footer {
 	  background-color: #464c4a;
 	  padding: 2em 0 5em 0;
-	  margin-top: 1em
+	  margin-top: 2em
       }
 
       #footer a {
@@ -27,16 +27,19 @@
 
       #siteheader {
 	  width: auto;
-	  padding: 1em 0 0 0;
 	  background-color: #004a96;
-	  margin: 0 0 2em 0;
+          margin-bottom: 2em;
+          color: white;
       }
-    </styles>
+    </style>
   </head>
   <body>
     <div id="wrapper">
       <div class="container" id="siteheader">
-	<div tal:replace="structure slot:protectedheader" />
+	<div class="container">
+	  <div tal:replace="structure slot:siteheader" />
+	  <div tal:replace="structure slot:protectedheader" />
+	</div>
       </div>
       <div class="container" id="page-content-wrapper">
 	<div id="main">
@@ -46,7 +49,8 @@
 	  </div>
 	</div>
       </div>
-      <div id="footer" tal:content="structure provider:footer" />
+      <div id="footer" tal:content="structure slot:footer" />
     </div>
   </body>
 </html>
+    

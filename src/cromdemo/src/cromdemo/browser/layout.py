@@ -13,6 +13,11 @@ from cromlech.security import IProtectedComponent
 
 
 @viewlet_manager
+class SiteHeader(ViewletManager):
+    pass
+
+
+@viewlet_manager
 @permissions('ViewProtected')
 class ProtectedHeader(ViewletManager):
     """Priviledied user only manager
@@ -22,6 +27,11 @@ class ProtectedHeader(ViewletManager):
 
 @viewlet_manager
 class ContextualActions(ViewletManager):
+    pass
+
+
+@viewlet_manager
+class Footer(ViewletManager):
     pass
 
 
