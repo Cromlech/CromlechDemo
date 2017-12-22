@@ -4,18 +4,6 @@ import os
 from loader import Configuration
 
 
-def get_key(path):
-    from cromlech.jwt.components import JWTHandler
-    if not os.path.isfile(path):
-        with open(path, 'w+', encoding="utf-8") as keyfile:
-            key = JWTHandler.generate_key()
-            export = key.export()
-            keyfile.write(export)
-    else:
-        key = JWTHandler.load_key_file(path)
-    return key
-
-
 with Configuration('config.json') as config:
 
     # We setup the cache for Chameleon templates
@@ -27,8 +15,10 @@ with Configuration('config.json') as config:
     implicit.initialize()
 
     # Getting the crypto key and creating the JWT service
+    from cromlech.sessions.jwt import key_from_file
     from cromlech.sessions.jwt import JWTCookieSession
-    key = get_key(config['session']['jwt_key'])
+
+    key = key_from_file(config['session']['jwt_key'])
     session_wrapper = JWTCookieSession(
         key, int(config['session']['timeout']))
 

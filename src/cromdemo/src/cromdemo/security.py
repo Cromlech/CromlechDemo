@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from crom import subscription, sources, target, order
+from crom import adapter, sources, target
 from cromlech.security import Unauthorized
-from cromlech.security import queryInteraction
-from cromlech.security.interfaces import IProtectedComponent, ISecurityCheck
+from cromlech.security.interfaces import IProtectedComponent
 from cromlech.security.meta import permissions
+from zope.interface import Interface
 
 
 accesses = {
@@ -12,21 +12,21 @@ accesses = {
     }
 
 
-@order(1)
-@subscription
-@sources(IProtectedComponent)
-@target(ISecurityCheck)
-def security_predicate(component, *args):
-    interaction = queryInteraction()
-    if not interaction:
-        raise Unauthorized
-    
-    protagonist = next(iter(interaction))
-    access = accesses.get(protagonist.principal.id, None)
-    if access is not None:
-        perms = permissions.get(component) or tuple()
+@adapter
+@sources(Interface)
+@target(IProtectedComponent)
+class SecurityPredicate(object):
+
+    def __init__(self, component):
+        self.component = component
+
+    def __check_security__(self, interaction):    
+        protagonist = next(iter(interaction))
+        perms = permissions.get(self.component) or tuple()
         if not perms:
             return
-        elif frozenset(perms) <= access:
+        
+        access = accesses.get(protagonist.principal.id, None)
+        if access and frozenset(perms) <= access:
             return
-    raise Unauthorized
+        raise Unauthorized

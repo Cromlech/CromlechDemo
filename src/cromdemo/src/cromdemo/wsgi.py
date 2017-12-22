@@ -9,7 +9,7 @@ from cromlech.dawnlight import DawnlightPublisher
 from cromlech.dawnlight import ViewLookup, view_locator
 from cromlech.i18n import EnvironLocale
 from cromlech.security import ContextualProtagonist, Principal
-from cromlech.security import component_protector
+from cromlech.security import component_protector, getSecureLookup
 from cromlech.security import unauthenticated_principal
 from cromlech.webob.request import Request
 
@@ -23,12 +23,15 @@ logins = {
 }
 
 
-def query_view(request, context, name=""):
-    view = IView.component(context, request, name=name)
+def secure_query_view(request, context, name=""):
+    security_wrapper, lookup_exceptions = getSecureLookup()
+    lookup = security_wrapper(IView.component)
+    view = lookup(context, request, name=name)
     return view(context, request)
 
 
-view_lookup = ViewLookup(view_locator(component_protector(query_view)))
+view_lookup = ViewLookup(view_locator(secure_query_view))
+dawnlight_publisher = DawnlightPublisher(view_lookup=view_lookup).publish
 
 
 def sessionned(app):
@@ -57,8 +60,8 @@ def demo_application(environ, start_response):
             else:
                 principal = unauthenticated_principal
             with ContextualProtagonist(principal):
-                publisher = DawnlightPublisher(view_lookup=view_lookup)
-                response = publisher.publish(request, root, handle_errors=True)
+                response = dawnlight_publisher(
+                    request, root, handle_errors=True)
                 return response(environ, start_response)
 
     return publisher(environ, start_response)

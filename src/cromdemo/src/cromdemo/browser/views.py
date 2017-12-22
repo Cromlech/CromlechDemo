@@ -12,7 +12,6 @@ from cromlech.browser import IURL, slot
 from cromlech.browser.exceptions import HTTPFound
 from cromlech.browser.directives import title
 from cromlech.security import permissions, Unauthorized
-from cromlech.security import IProtectedComponent
 from zope.interface import implementer, Interface
 from ..auth import logout
 
@@ -59,7 +58,6 @@ class NoAcces(Page):
 @context(Leaf)
 @target(ITab)
 @permissions('ViewProtected')
-@implementer(IProtectedComponent)
 class ProtectedLeafView(Page):
 
     def render(self):

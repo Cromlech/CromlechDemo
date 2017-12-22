@@ -14,7 +14,6 @@ from cromlech.security import IProtectedComponent
 
 @viewlet_manager
 @permissions('ViewProtected')
-@implementer(IProtectedComponent)
 class ProtectedHeader(ViewletManager):
     """Priviledied user only manager
     """
