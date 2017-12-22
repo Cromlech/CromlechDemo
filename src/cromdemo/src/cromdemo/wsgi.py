@@ -10,7 +10,8 @@ from cromlech.dawnlight import ViewLookup, view_locator
 from cromlech.i18n import EnvironLocale
 from cromlech.security import ContextualInteraction, Principal
 from cromlech.security import removeFromInteraction, joinInteraction
-from cromlech.security import getSecureLookup
+from cromlech.security import no_security, getSecureLookup
+from cromlech.security import ContextualSecurityWrapper
 from cromlech.security import unauthenticated_principal as anonymous
 from cromlech.webob.request import Request
 
@@ -21,6 +22,7 @@ from .auth import secured
 logins = {
     'demo': 'demo',
     'admin': 'admin',
+    'grok': 'grok',
 }
 
 
@@ -62,8 +64,12 @@ def demo_application(environ, start_response):
                     principal = Principal(username)
                     removeFromInteraction(anonymous, interaction)
                     joinInteraction(principal, interaction)
-    
-                response = publisher(request, root, handle_errors=True)
+
+                if username == 'grok':
+                    with ContextualSecurityWrapper(no_security, (Exception,)):
+                        response = publisher(request, root, handle_errors=True)
+                else:
+                    response = publisher(request, root, handle_errors=True)
                 return response(environ, start_response)
 
             return publish(environ, start_response)
