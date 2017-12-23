@@ -8,12 +8,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8" />
-    <title></title>
+    <title>Cromlech demo</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <style>
+      #main {
+          padding: 1em;
+      }
+
+      #content {
+          margin: 1em;
+      }
+      
       #footer {
 	  background-color: #464c4a;
 	  padding: 2em 0 5em 0;
@@ -43,8 +51,8 @@
       </div>
       <div class="container" id="page-content-wrapper">
 	<div id="main">
-	  <div class="content">
-	    <div tal:replace="structure slot:contextualactions" />
+	  <div tal:replace="structure slot:contextualactions" />
+	  <div id="content">
 	    <div tal:replace="structure content" />
 	  </div>
 	</div>
