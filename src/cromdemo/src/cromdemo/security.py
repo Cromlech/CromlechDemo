@@ -25,18 +25,6 @@ def check_permissions(component, interaction):
     return
 
 
-@adapter
-@sources(Interface)
-@target(IProtectedComponent)
-class SecurityChecks(object):
-
-    def __init__(self, component):
-        self.component = component
-
-    def __check_security__(self, interaction):    
-        return check_permissions(self.component, interaction)
-
-
 @subscription
 @sources(Interface)
 @target(ISecurityPredicate)
