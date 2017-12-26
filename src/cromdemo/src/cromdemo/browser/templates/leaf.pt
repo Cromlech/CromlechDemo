@@ -1,7 +1,7 @@
 <div id="leaf">
   <h1 tal:content="context.title" />
   <p tal:content="context.body" />
-  <a tal:attributes="href view.url() + '/protected'">
-    Access the protected view
+  <a tal:attributes="href view.url() + '/edit'">
+    Edit content (admin only)
   </a>
 </div>

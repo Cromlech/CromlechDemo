@@ -8,7 +8,7 @@ from crom import target, order
 from dolmen.forms.base import name, context, form_component
 from dolmen.forms.base import Fields, Action, Actions, FAILURE
 from cromlech.browser.exceptions import HTTPFound
-from cromlech.security import IProtectedComponent
+from cromlech.security import permissions
 from zope.interface import implementer
 
 
@@ -30,14 +30,15 @@ class LoginAction(Action):
 @context(ILeaf)
 @target(ITab)
 @order(20)
+@permissions('Manage')
 class Edit(Form):
     fields = Fields(ILeaf)
-
+    ignoreContent = False
+    
 
 @form_component
 @name('login')
 @context(Auth)
-@implementer(IProtectedComponent)
 class Login(Form):
     fields = Fields(ILogin)
     actions = Actions(LoginAction(u'Log me'))

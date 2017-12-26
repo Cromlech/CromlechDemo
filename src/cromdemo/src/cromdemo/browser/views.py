@@ -12,6 +12,7 @@ from cromlech.browser import IURL, slot
 from cromlech.browser.exceptions import HTTPFound
 from cromlech.browser.directives import title
 from cromlech.security import permissions, Unauthorized
+from cromlech.security.predicate import security_predication
 from zope.interface import implementer, Interface
 from ..auth import logout
 
@@ -53,17 +54,6 @@ class NoAcces(Page):
         return "No access for you !"
 
 
-@view_component
-@name('protected')
-@context(Leaf)
-@target(ITab)
-@permissions('View')
-class ProtectedLeafView(Page):
-
-    def render(self):
-        return "The protected area revealed !"
-
-
 @viewlet
 @slot(SiteHeader)
 class Cromlech(Viewlet):
@@ -102,6 +92,8 @@ class Tabs(Viewlet):
             }
 
     def update(self):
-        self._tabs = sort_components(
-            ITab.all_components(self.context, self.request), key=sort_key)
-        self.available = len(self._tabs)
+        tabs = ITab.all_components(self.context, self.request)
+        tabs = [(name, tab) for name, tab in tabs
+                if not security_predication(tab)]
+        self._tabs = sort_components(tabs, key=sort_key)
+        self.available = len(self._tabs) > 0
