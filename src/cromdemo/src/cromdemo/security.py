@@ -8,8 +8,9 @@ from zope.interface import Interface
 
 
 accesses = {
-    'admin': set(('ViewProtected',)),
-    }
+    'admin': frozenset(('View', 'Manage')),
+    'demo': frozenset(('View',)),
+}
 
 
 @adapter
@@ -21,12 +22,12 @@ class SecurityPredicate(object):
         self.component = component
 
     def __check_security__(self, interaction):    
-        protagonist = next(iter(interaction))
         perms = permissions.get(self.component) or tuple()
         if not perms:
             return
-        
-        access = accesses.get(protagonist.principal.id, None)
-        if access and frozenset(perms) <= access:
-            return
-        raise Unauthorized
+
+        for principal in interaction.principals:
+            access = accesses.get(principal.id, None)
+            if not access or not frozenset(perms) <= access:
+                return Unauthorized
+        return

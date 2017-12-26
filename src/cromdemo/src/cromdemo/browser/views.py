@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import tal_template, ITab, Page
-from .layout import SiteHeader, ProtectedHeader, ContextualActions
+from .layout import SiteHeader, AdminHeader, ContextualActions
 from ..models import Root, Leaf
 
 from crom import target, order
@@ -57,7 +57,7 @@ class NoAcces(Page):
 @name('protected')
 @context(Leaf)
 @target(ITab)
-@permissions('ViewProtected')
+@permissions('View')
 class ProtectedLeafView(Page):
 
     def render(self):
@@ -73,8 +73,8 @@ class Cromlech(Viewlet):
 
     
 @viewlet
-@slot(ProtectedHeader)
-class WhoAmI(Viewlet):
+@slot(AdminHeader)
+class WelcomeMaster(Viewlet):
     """Greets a logged in superuser on the index.
     """
     def render(self):

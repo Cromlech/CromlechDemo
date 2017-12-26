@@ -18,9 +18,9 @@ class SiteHeader(ViewletManager):
 
 
 @viewlet_manager
-@permissions('ViewProtected')
-class ProtectedHeader(ViewletManager):
-    """Priviledied user only manager
+@permissions('Manage')
+class AdminHeader(ViewletManager):
+    """Authorized user only
     """
     pass
 
