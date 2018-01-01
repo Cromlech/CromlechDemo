@@ -32,10 +32,10 @@ def logout(session=None):
 
 def sessionned(app):
     @wraps(app)
-    def with_session(environ, start_response):
+    def with_session(environ, start_response, *args, **kwargs):
         try:
             setSession(environ['session'])
-            response = app(environ, start_response)
+            response = app(environ, start_response, *args, **kwargs)
         finally:
             setSession()
         return response

@@ -42,6 +42,7 @@ publisher = DawnlightPublisher(
 ).publish
 
 
+@sessionned
 @secured
 def publish(environ, start_response, principal):
     request = Request(environ)
@@ -70,7 +71,6 @@ def publish(environ, start_response, principal):
         return response(environ, start_response)
 
 
-@sessionned
 def demo_application(environ, start_response):
 
     # Security guards are the security context of the application
