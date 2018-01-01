@@ -10,7 +10,7 @@ from cromlech.security import security_check, security_predication
 from cromlech.security import unauthenticated_principal as anonymous
 from cromlech.webob.request import Request
 
-from .models import Root
+from .models import Leaf, Root
 from .auth import Auth, sessionned, secured
 from .security import secure_query_view
 
@@ -18,11 +18,14 @@ from .security import secure_query_view
 # Root serves as a publication root, for the authenticated users.
 # It behaves like a dict, but it will locate objects upon retrieval
 # using the `__getitem__` method.
-root = Root()
+root = Root({
+    'green': Leaf('Green leaf', 'A summer leaf'),
+    'yellow': Leaf('Yellow leaf', 'An automn leaf'),
+})
 
 
 # Auth serves as a context for the `Login` form.
-# It behaves like a dict but has a simple `authenticate` method
+# It behaves like a dict but has an additional `authenticate` method
 # used by the form.
 auth = Auth({
     'demo': 'demo',

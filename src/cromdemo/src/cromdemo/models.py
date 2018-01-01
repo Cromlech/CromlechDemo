@@ -29,11 +29,6 @@ class Root(dict, Location):
 
     title = u"Demo Root"
 
-    def __init__(self, *args, **kwargs):
-        dict.__init__(self, *args, **kwargs)
-        self['green'] = Leaf(u'Green leaf', u'A summer leaf')
-        self['yellow'] = Leaf(u'Yellow leaf', u'An automn leaf')
-
     def __getitem__(self, key):
         item = dict.__getitem__(self, key)
         if item is not None:
