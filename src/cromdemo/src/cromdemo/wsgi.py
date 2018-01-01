@@ -57,20 +57,16 @@ def sessionned(app):
 @sessionned
 def demo_application(environ, start_response):
 
-    with EnvironLocale(environ):
-        with ContextualInteraction(anonymous) as interaction:
-            with ContextualSecurityGuards(security_predication, security_check):
+    @secured(logins, "CromlechDemo")
+    def publish(environ, start_response):
+        with ContextualSecurityGuards(security_predication, security_check): 
+            with EnvironLocale(environ):
+                request = Request(environ)
+                username = environ.get('REMOTE_USER')
+                if username is not None:
+                    principal = Principal(username)
+                    with ContextualInteraction(principal) as interaction:
+                        response = publisher(request, root)
+                        return response(environ, start_response)
 
-                @secured(logins, "CromlechDemo")
-                def publish(environ, start_response):
-                    request = Request(environ)
-                    username = environ.get('REMOTE_USER')
-                    if username is not None:
-                        principal = Principal(username)
-                        removeFromInteraction(anonymous, interaction)
-                        joinInteraction(principal, interaction)
-
-                    response = publisher(request, root)
-                    return response(environ, start_response)
-
-                return publish(environ, start_response)
+    return publish(environ, start_response)
