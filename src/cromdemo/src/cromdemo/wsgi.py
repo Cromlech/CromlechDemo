@@ -2,7 +2,6 @@
 
 from functools import wraps
 
-from crom import ComponentLookupError
 from cromlech.browser import setSession
 from cromlech.browser.interfaces import IView
 from cromlech.dawnlight import DawnlightPublisher

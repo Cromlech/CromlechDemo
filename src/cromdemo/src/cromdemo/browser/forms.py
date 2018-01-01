@@ -9,7 +9,6 @@ from dolmen.forms.base import name, context, form_component
 from dolmen.forms.base import Fields, Action, Actions, FAILURE
 from cromlech.browser.exceptions import HTTPFound
 from cromlech.security import permissions
-from zope.interface import implementer
 
 
 class LoginAction(Action):

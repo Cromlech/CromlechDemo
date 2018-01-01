@@ -8,8 +8,7 @@ from cromlech.i18n import getLocale
 from cromlech.security import permissions
 from cromlech.webob.response import Response
 from dolmen.viewlet import ViewletManager, viewlet_manager
-from zope.interface import Interface, implementer
-from cromlech.security import IProtectedComponent
+from zope.interface import Interface
 
 
 @viewlet_manager
@@ -53,8 +52,8 @@ class LiteLayout(object):
     def namespace(self, **extra):
         namespace = {
             'context': self.context,
-            'request': self.request,
             'layout': self,
+            'request': self.request,
             }
         namespace.update(extra)
         return namespace

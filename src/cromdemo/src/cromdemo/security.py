@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from crom import subscription, adapter, sources, target
+from crom import subscription, sources, target
 from cromlech.security import Unauthorized
-from cromlech.security.interfaces import IProtectedComponent, ISecurityPredicate
+from cromlech.security.interfaces import ISecurityPredicate
 from cromlech.security.meta import permissions
 from zope.interface import Interface
 
