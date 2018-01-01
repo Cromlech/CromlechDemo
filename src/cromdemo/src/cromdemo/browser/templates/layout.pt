@@ -28,8 +28,9 @@
       }
       
       #footer {
+          color: white;
 	  background-color: #464c4a;
-	  padding: 2em 0 5em 0;
+	  padding: 2em 0;
 	  margin-top: 2em
       }
 
@@ -43,6 +44,10 @@
 	  background-color: #004a96;
           margin-bottom: 2em;
           color: white;
+      }
+
+      .header-action {
+          margin-top: -2em;
       }
     </style>
   </head>

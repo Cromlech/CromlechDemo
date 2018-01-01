@@ -5,10 +5,23 @@ from crom.utils import sort_components
 from dolmen.viewlet import viewlet, Viewlet
 from cromlech.browser import IURL, slot
 from cromlech.browser.directives import title
-from cromlech.security import getSecurityGuards
+from cromlech.security import getSecurityGuards, permissions
 
 from . import tal_template, ITab
-from .layout import SiteHeader, AdminHeader, ContextualActions
+from .layout import SiteHeader, AdminHeader, ContextualActions, Footer
+
+
+@viewlet
+@slot(Footer)
+class Footer(Viewlet):
+
+    def render(self):
+        return """
+<div class='container'>
+  <em>
+    <a href='https://github.com/Cromlech'>Browse the cromlech repository</a>
+  </em>
+</div>"""
 
 
 @viewlet
@@ -20,6 +33,17 @@ class Cromlech(Viewlet):
         if not baseurl.startswith('/'):
             baseurl = '/' + baseurl
         return "<h1><a href='%s'>Cromlech</a></h1>" % baseurl
+
+
+@viewlet
+@slot(SiteHeader)
+@permissions('View')
+class Logout(Viewlet):
+
+    def render(self):
+        return """
+<div class='header-action pull-right'><a href='%s/logout'>Logout</a></div>
+""" % self.request.script_name
 
 
 @viewlet

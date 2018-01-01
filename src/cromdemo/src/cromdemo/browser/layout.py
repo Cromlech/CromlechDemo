@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import crom
-
-from . import tal_template
 from cromlech.browser import IRequest, ILayout
 from cromlech.i18n import getLocale
 from cromlech.security import permissions
 from cromlech.webob.response import Response
 from dolmen.viewlet import ViewletManager, viewlet_manager
 from zope.interface import Interface
+
+from . import tal_template
 
 
 @viewlet_manager
