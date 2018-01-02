@@ -24,6 +24,8 @@ $> uwsgi --http :8080 --wsgi-file app.py
 ```
 
 To debug uwsgi with `pdb` use the `--honour-stdin` option.
-You can also reduce the number of workers to 1 with the option `-p 1`::
+You can also reduce the number of workers to 1 with the option `-p 1`.
 
-  uwsgi --http :8080 --wsgi-file -p 1 --honour-stdin app.py
+```bash
+$> uwsgi --http :8080 --wsgi-file -p 1 --honour-stdin app.py
+```
