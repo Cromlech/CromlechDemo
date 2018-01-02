@@ -49,6 +49,13 @@
       .header-action {
           margin-top: -2em;
       }
+
+      .form-group.required label:after {
+          content: "•";
+          color: red;
+	  padding-left: 0.3em;
+	  font-weight: bold;
+      }
     </style>
   </head>
   <body>

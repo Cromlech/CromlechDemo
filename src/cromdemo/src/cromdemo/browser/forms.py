@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import uuid
 from crom import target, order
 from cromlech.browser import IURL
 from cromlech.browser.exceptions import HTTPFound
 from cromlech.browser.interfaces import IPublicationRoot
+from cromlech.browser.directives import title
 from cromlech.security import permissions
 from dolmen.forms.base import Fields, FAILURE
 from dolmen.forms.base import action, name, context, form_component
@@ -12,7 +14,32 @@ from dolmen.forms.base.errors import Error
 
 from . import ITab, Form
 from ..auth import Auth
-from ..models import ILeaf, ILogin
+from ..models import Leaf, ILeaf, ILogin
+
+
+@form_component
+@name('add.leaf')
+@context(IPublicationRoot)
+@target(ITab)
+@order(50)
+@title("Add a leaf")
+@permissions('Manage')
+class AddLeaf(Form):
+
+    fields = Fields(ILeaf)
+    ignoreContent = True
+
+    @action('Add')
+    def add(self):
+        data, errors = self.extractData()
+        if errors:
+            form.errors = errors
+            return FAILURE
+
+        uid = str(uuid.uuid4())  # a simple UUID id to avoid conflict.
+        content = Leaf(data['title'], data['body'])
+        self.context[uid] = content
+        raise HTTPFound(IURL(self.context, self.request))
 
 
 @form_component
@@ -20,6 +47,7 @@ from ..models import ILeaf, ILogin
 @context(ILeaf)
 @target(ITab)
 @order(20)
+@title("Edit the content")
 @permissions('Manage')
 class Edit(Form):
 

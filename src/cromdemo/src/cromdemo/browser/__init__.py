@@ -32,3 +32,11 @@ class Page(View):
 class Form(BaseForm):
     responseFactory = Response
     make_response = make_layout_response
+    template = tal_template('form.pt')
+
+    def bootstrap_widgets(self):
+        """Adds the needed css classes for bootstrap styles.
+        """
+        for widget in self.fieldWidgets:
+            widget.defaultHtmlClass.append('form-control')
+            yield widget

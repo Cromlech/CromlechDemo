@@ -7,13 +7,21 @@ from zope.schema import Text, TextLine, Password
 
 
 class ILogin(Interface):
-    username = TextLine(title=u'Username', required=True)
-    password = Password(title=u'Password', required=True)
+
+    username = TextLine(
+        title='Username', required=True)
+
+    password = Password(
+        title='Password', required=True)
 
 
 class ILeaf(Interface):
-    title = TextLine(title=u'title', required=True)
-    body = Text(title=u'body', required=True)
+
+    title = TextLine(
+        title='Title', required=True)
+
+    body = Text(
+        title='Body', required=True)
 
 
 @implementer(ILeaf)
