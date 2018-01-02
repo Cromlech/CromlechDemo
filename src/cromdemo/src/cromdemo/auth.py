@@ -3,7 +3,7 @@
 from functools import wraps
 from cromlech.security import Principal
 from cromlech.security import unauthenticated_principal as anonymous
-from cromlech.browser import setSession, getSession
+from cromlech.browser import getSession
 from cromlech.browser.interfaces import IPublicationRoot
 from zope.interface import implementer
 from zope.location import Location
@@ -28,18 +28,6 @@ def logout(session=None):
         session.clear()
         return True
     return False
-
-
-def sessionned(app):
-    @wraps(app)
-    def with_session(environ, start_response, *args, **kwargs):
-        try:
-            setSession(environ['session'])
-            response = app(environ, start_response, *args, **kwargs)
-        finally:
-            setSession()
-        return response
-    return with_session
 
 
 def secured(app):
