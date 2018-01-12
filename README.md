@@ -1,5 +1,5 @@
-CromlechCromDemo
-================
+Cromlech Demo
+=============
 
 For python2.7+
 --------------
