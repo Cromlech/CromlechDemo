@@ -15,12 +15,20 @@ $> pip install uwsgi
 $> uwsgi --http :8080 --wsgi-file app.py
 ```
 
+You can now access http://127.0.0.1:8080 on your browser.
+There are 3 users created for the demo purposes:
 
-Features
---------
+  - username: admin, password: admin  (all rights)
+  - username: demo, password: demo  (view rights)
+  - username: grok, password: grok  (no rights)
+
+
+Demonstrated features
+---------------------
 
   - Encrypted and signed JWT Sessions;
-  - Layout, Views, Forms;
+  - Browser components: Layout, Views, Forms and sub components;
   - Publishing using object traversing;
-  - Pluggable security;
-  - Internationalization using the Gnu Gettext
+  - Authentication and pluggable security;
+  - Internationalization using the Gnu Gettext;
+  - Event dispatching;
