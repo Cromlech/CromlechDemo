@@ -32,3 +32,13 @@ Demonstrated features
   - Authentication and pluggable security;
   - Internationalization using the Gnu Gettext;
   - Event dispatching;
+
+
+Documentation
+-------------
+
+The technical documentation is within the code itself.
+Each part is heavily commented to allow a quick grasp of the purpose
+of each piece of software.
+
+You are strongly encourage to modify and experiment with that demo.
