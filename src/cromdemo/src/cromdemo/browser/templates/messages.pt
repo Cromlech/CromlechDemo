@@ -1,0 +1,7 @@
+<div id="flash-messages">
+  <div class="alert alert-info" role="alert"
+       tal:repeat="message viewlet.messages"
+       tal:attributes="id 'message-' + message['id']">
+    <span tal:content="message['body']" />
+  </div>
+</div>

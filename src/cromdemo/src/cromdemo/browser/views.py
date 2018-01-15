@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from crom import target, order
+from dolmen.message import send
 from dolmen.view import name, context, view_component
 from cromlech.browser.exceptions import HTTPFound
 from cromlech.security import Unauthorized
@@ -20,6 +21,7 @@ class Logout(Page):
         logout()
 
     def render(self):
+        send('You have been logged out.')
         raise HTTPFound(location='/')
 
 

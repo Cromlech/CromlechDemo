@@ -30,6 +30,10 @@ with Configuration('config.json') as config:
     from cromlech.i18n import load_translations_directories
     load_translations_directories()
 
+    # Adding the event dispatcher
+    from cromlech.events import setup_dispatcher
+    setup_dispatcher()
+
     # Create the application, including the middlewares.
     from cromdemo.wsgi import demo_application
     application = session_wrapper(demo_application)

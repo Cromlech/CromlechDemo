@@ -7,6 +7,7 @@ from cromlech.browser.exceptions import HTTPFound
 from cromlech.browser.interfaces import IPublicationRoot
 from cromlech.browser.directives import title
 from cromlech.security import permissions
+from dolmen.message import send
 from dolmen.forms.base import Fields, FAILURE
 from dolmen.forms.base import action, name, context, form_component
 from dolmen.forms.base import apply_data_event
@@ -93,4 +94,6 @@ class Login(Form):
                 identifier=self.prefix,
             ))
             return FAILURE
+
+        send('Login successful.')
         raise HTTPFound(self.request.url)

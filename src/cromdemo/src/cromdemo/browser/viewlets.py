@@ -2,13 +2,26 @@
 
 from crom import order
 from crom.utils import sort_components
+from dolmen.message import receive
 from dolmen.viewlet import viewlet, Viewlet
 from cromlech.browser import IURL, slot
 from cromlech.browser.directives import title
 from cromlech.security import getSecurityGuards, permissions
 
 from . import tal_template, ITab
-from .layout import SiteHeader, AdminHeader, ContextualActions, Footer
+from .layout import SiteHeader, AdminHeader, Footer
+from .layout import ContextualActions, AboveContent 
+
+
+@viewlet
+@slot(AboveContent)
+class Messages(Viewlet):
+
+    template = tal_template('messages.pt')
+
+    def update(self):
+        self.messages = list(receive())
+        self.available = bool(len(self.messages))
 
 
 @viewlet

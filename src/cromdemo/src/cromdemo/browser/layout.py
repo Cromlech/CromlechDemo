@@ -17,6 +17,11 @@ class SiteHeader(ViewletManager):
 
 
 @viewlet_manager
+class AboveContent(ViewletManager):
+    pass
+
+
+@viewlet_manager
 @permissions('Manage')
 class AdminHeader(ViewletManager):
     """Authorized user only
