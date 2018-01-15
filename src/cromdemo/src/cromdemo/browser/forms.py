@@ -12,6 +12,8 @@ from dolmen.forms.base import Fields, FAILURE
 from dolmen.forms.base import action, name, context, form_component
 from dolmen.forms.base import apply_data_event
 from dolmen.forms.base.errors import Error
+from zope.event import notify
+from zope.lifecycleevent import created, added
 
 from . import ITab, Form
 from ..auth import Auth
@@ -34,12 +36,14 @@ class AddLeaf(Form):
     def add(self):
         data, errors = self.extractData()
         if errors:
-            form.errors = errors
+            self.errors = errors
             return FAILURE
 
-        uid = str(uuid.uuid4())  # a simple UUID id to avoid conflict.
+        uid = str(uuid.uuid4().hex)  # a simple UUID id to avoid conflict.
         content = Leaf(data['title'], data['body'])
+        created(content)
         self.context[uid] = content
+        added(content, newParent=self.context, newName=uid)
         raise HTTPFound(IURL(self.context, self.request))
 
 
@@ -59,7 +63,7 @@ class Edit(Form):
     def apply(self):
         data, errors = self.extractData()
         if errors:
-            form.errors = errors
+            self.errors = errors
             return FAILURE
 
         content = self.getContent()
