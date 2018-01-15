@@ -12,7 +12,6 @@ from dolmen.forms.base import Fields, FAILURE
 from dolmen.forms.base import action, name, context, form_component
 from dolmen.forms.base import apply_data_event
 from dolmen.forms.base.errors import Error
-from zope.event import notify
 from zope.lifecycleevent import created, added
 
 from . import ITab, Form
@@ -87,7 +86,7 @@ class Login(Form):
     def login(self):
         data, errors = self.extractData()
         if errors:
-            form.errors = errors
+            self.errors = errors
             return FAILURE
 
         success = self.context.authenticate(

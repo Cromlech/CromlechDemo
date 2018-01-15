@@ -44,7 +44,7 @@ class LeafIndex(Page):
 @view_component
 @name('')
 @context(Unauthorized)
-class NoAcces(Page):
+class NoAccess(Page):
 
     def render(self):
         return "No access for you !"
