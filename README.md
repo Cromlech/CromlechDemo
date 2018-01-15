@@ -41,4 +41,12 @@ The technical documentation is within the code itself.
 Each part is heavily commented to allow a quick grasp of the purpose
 of each piece of software.
 
-You are strongly encourage to modify and experiment with that demo.
+You are strongly encouraged to modify and experiment with that demo.
+
+
+Test coverage
+-------------
+
+Every package is thoroughly tested.
+You can follow the status of each of them on Travis :
+https://travis-ci.org/Cromlech
