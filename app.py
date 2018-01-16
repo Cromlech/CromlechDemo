@@ -38,5 +38,6 @@ setup_dispatcher()
 from cromdemo.wsgi import demo_application
 application = session_wrapper(demo_application)
 
+# Here, we use waitress, but we can deploy our app on any WSGI server.
 from waitress import serve
 serve(application, listen='0.0.0.0:8080')
