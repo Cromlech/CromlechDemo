@@ -26,7 +26,7 @@ To serve with `uwsgi`:
 
 ```bash
 $> pip install uwsgi
-$> uwsgi --http :8080 --wsgi-file server.py
+$> uwsgi --http :8080 --wsgi-file app.py
 ```
 
 
