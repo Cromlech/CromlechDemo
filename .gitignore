@@ -35,7 +35,6 @@ parts
 build/
 dist/
 
-
 # miscellaneous
 *.orig
 *.ori
@@ -44,8 +43,9 @@ dist/
 *.rej
 *.egg-info
 
-
-
-
-
-
+# project specific
+config.json
+eggs/
+jwt.key
+pip-selfcheck.json
+share/
