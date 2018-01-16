@@ -31,7 +31,6 @@ root = Root({
 auth = Auth({
     'demo': 'demo',
     'admin': 'admin',
-    'grok': 'grok',
 })
 
 

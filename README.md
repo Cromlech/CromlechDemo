@@ -17,34 +17,39 @@ $> pip install -e .
 To serve with `waitress`
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-```bash
-$> pip install waitress
-$> waitress-serve --listen=*:8080 app:application
-```
+  ```bash
+  $> pip install waitress
+  $> waitress-serve --listen=*:8080 app:application
+  ```
+
 
 To serve with `uwsgi`
 ~~~~~~~~~~~~~~~~~~~~~
 
-```bash
-$> pip install uwsgi
-$> uwsgi --http :8080 --wsgi-file server.py
-```
+  ```bash
+  $> pip install uwsgi
+  $> uwsgi --http :8080 --wsgi-file server.py
+  ```
+
 
 To serve with `gunicorn`
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-```bash
-$> pip install gunicorn
-$> gunicorn -b 0.0.0.0:8080 app:application
-```
+  ```bash
+  $> pip install gunicorn
+  $> gunicorn -b 0.0.0.0:8080 app:application
+  ```
 
+Access
+~~~~~~
 
-You can now access http://127.0.0.1:8080 on your browser.
-There are 3 users created for the demo purposes:
+  Using one of the servers as described above, You can now access
+  http://127.0.0.1:8080 on your browser.
 
-  - username: admin, password: admin  (all rights)
-  - username: demo, password: demo  (view rights)
-  - username: grok, password: grok  (no rights)
+  There are 2 users created for the demo purposes:
+
+    - username: admin, password: admin, right: manage, view
+    - username: demo, password: demo, right: view
 
 
 Demonstrated features
