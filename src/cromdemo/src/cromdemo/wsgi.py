@@ -103,7 +103,7 @@ def demo_application(environ, start_response):
 
         # We retrieve the session set by the session middleware and
         # persisted in the environ. We set it globally in the thread.
-        # This will allow the authentication to make use of it.        
+        # This will allow the authentication to make use of it.
         with Session(environ['session']):
 
             # We set the language of the application, extracting the

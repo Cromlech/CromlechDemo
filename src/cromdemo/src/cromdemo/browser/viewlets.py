@@ -10,7 +10,7 @@ from cromlech.security import getSecurityGuards, permissions
 
 from . import tal_template, ITab
 from .layout import SiteHeader, AdminHeader, Footer
-from .layout import ContextualActions, AboveContent 
+from .layout import ContextualActions, AboveContent
 
 
 @viewlet
@@ -81,7 +81,7 @@ class Tabs(Viewlet):
 
     def tabs(self):
         url = IURL(self.context, self.request)
-        for id, view in self._tabs:    
+        for id, view in self._tabs:
             yield {
                 'active': self.view.__class__ is view,
                 'title': title.get(view) or id,

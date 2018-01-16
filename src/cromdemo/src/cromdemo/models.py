@@ -42,5 +42,3 @@ class Root(dict, Location):
         if item is not None:
             locate(item, self, key)
         return item
-
-
