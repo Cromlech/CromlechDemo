@@ -12,8 +12,32 @@ $> pyvenv . && source bin/activate
 $> pip install -U pip setuptools
 $> pip install -r requirements.txt
 $> pip install -e .
-$> python app.py
 ```
+
+To serve with `waitress`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+```bash
+$> pip install waitress
+$> waitress-serve --listen=*:8080 app:application
+```
+
+To serve with `uwsgi`
+~~~~~~~~~~~~~~~~~~~~~
+
+```bash
+$> pip install uwsgi
+$> uwsgi --http :8080 --wsgi-file server.py
+```
+
+To serve with `gunicorn`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+```bash
+$> pip install gunicorn
+$> gunicorn -b 0.0.0.0:8080 app:application
+```
+
 
 You can now access http://127.0.0.1:8080 on your browser.
 There are 3 users created for the demo purposes:

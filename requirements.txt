@@ -24,5 +24,3 @@ git+https://github.com/Cromlech/dolmen.tales#egg=dolmen.tales
 git+https://github.com/Cromlech/dolmen.template#egg=dolmen.template
 git+https://github.com/Cromlech/dolmen.view#egg=dolmen.view
 git+https://github.com/Cromlech/dolmen.viewlet#egg=dolmen.viewlet
-
-waitress >= 1.1.0
