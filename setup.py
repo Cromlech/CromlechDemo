@@ -6,7 +6,7 @@ version = '1.0'
 setup(name='cromdemo',
       version=version,
       description="",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.md").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
           "Programming Language :: Python",
@@ -45,9 +45,6 @@ setup(name='cromdemo',
       ],
       entry_points="""
       # -*- Entry points: -*-
-      [paste.app_factory]
-      demo = cromdemo.wsgi:demo_application
-
       [fanstatic.libraries]
       crom = cromdemo.browser.resources:Library
       """,
