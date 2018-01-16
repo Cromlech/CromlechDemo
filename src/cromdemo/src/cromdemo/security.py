@@ -36,7 +36,9 @@ def security_predicate(component, interaction):
 
 def secure_query_view(request, context, name=""):
     check, predict = getSecurityGuards()
-    factory = IView.component(context, request, name=name)
+    factory = IView.component(context, request, name=name, default=None)
+    if factory is None:
+        return None
     if predict is not None:
         factory = predict(factory)  # raises if security fails.
     view = factory(context, request)

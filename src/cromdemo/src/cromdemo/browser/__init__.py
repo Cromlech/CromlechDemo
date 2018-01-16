@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from os import path
-
 from cromlech.browser import IView
 from cromlech.webob.response import Response
 from dolmen.template import TALTemplate
@@ -21,14 +20,6 @@ class ITab(IView):
     pass
 
 
-class Page(View):
-    responseFactory = Response
-    make_response = make_layout_response
-
-    def url(self):
-        return get_absolute_url(self.context, self.request)
-
-
 class Form(BaseForm):
     responseFactory = Response
     make_response = make_layout_response
@@ -40,3 +31,20 @@ class Form(BaseForm):
         for widget in self.fieldWidgets:
             widget.defaultHtmlClass.append('form-control')
             yield widget
+
+
+class Page(View):
+    responseFactory = Response
+    make_response = make_layout_response
+
+    def url(self):
+        return get_absolute_url(self.context, self.request)
+
+
+class ErrorPage(Page):
+    code = 400
+
+    def make_response(self, *args, **kws):
+        response = make_layout_response(self, *args, **kws)
+        response.status_code = self.code
+        return response
